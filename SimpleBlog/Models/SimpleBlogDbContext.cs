@@ -1,14 +1,18 @@
 ﻿using System.CodeDom;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using SimpleBlog.EntityConfigurations;
 
 namespace SimpleBlog.Models
 {
-	public class SimpleBlogDbContext : DbContext
+	public class SimpleBlogDbContext : IdentityDbContext<ApplicationUser>
 	{
-		public SimpleBlogDbContext()
+		public SimpleBlogDbContext() : base(nameOrConnectionString: "SimpleBlogDbContext") { }
+
+
+		public static SimpleBlogDbContext Create()
 		{
-			
+			return new SimpleBlogDbContext();
 		}
 
 
