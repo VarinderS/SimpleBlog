@@ -1,7 +1,36 @@
-﻿
+﻿@model IEnumerable<SimpleBlog.Models.Post>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Posts</h2>
 
+<p>
+	<a href="@Url.Action(actionName: "Create")" class="btn btn-default">Create a post</a>
+</p>
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Tags</th>
+			<th>Content</th>
+			<th>Author</th>
+			<th>Date Created</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		@foreach (var post in Model)
+		{
+		<tr>
+			<td>@post.Title</td>
+			<td>@String.Join(separator: ", ", values: post.Tags.Select(selector: tag => tag.Name))</td>
+			<td>@Html.Raw(value: post.Description)</td>
+			<td>@(post.Author == null ? "Unknown" : post.Author.UserName)</td>
+			<td>@post.DatePosted</td>
+		</tr>
+		}
+	</tbody>
+</table>

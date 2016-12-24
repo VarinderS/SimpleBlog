@@ -148,6 +148,7 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Post\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -165,6 +166,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Post.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -180,6 +182,10 @@
     <Compile Include="Migrations\201612240628353_AddedIdentityModels.cs" />
     <Compile Include="Migrations\201612240628353_AddedIdentityModels.Designer.cs">
       <DependentUpon>201612240628353_AddedIdentityModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612240946013_AddedPostAuthorRelationship.cs" />
+    <Compile Include="Migrations\201612240946013_AddedPostAuthorRelationship.Designer.cs">
+      <DependentUpon>201612240946013_AddedPostAuthorRelationship.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -217,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612240628353_AddedIdentityModels.resx">
       <DependentUpon>201612240628353_AddedIdentityModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612240946013_AddedPostAuthorRelationship.resx">
+      <DependentUpon>201612240946013_AddedPostAuthorRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

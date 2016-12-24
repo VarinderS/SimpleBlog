@@ -9,5 +9,10 @@ namespace SimpleBlog.Models
 		public string Name { get; set; }
 
 		public IList<Post> Posts { get; set; }
+
+		public Tag()
+		{
+			Posts = new List<Post>();
+		}
 	}
 }

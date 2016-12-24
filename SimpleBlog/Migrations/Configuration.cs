@@ -65,6 +65,24 @@ namespace SimpleBlog.Migrations
 			{
 				userManager.AddToRole(userId: adminUser.Id, role: adminRole.Name);
 			}
+
+
+			context.Tags.AddOrUpdate(
+				tag => tag.Name,
+				new Tag { Name = "C#" },
+				new Tag { Name = "Random" }
+			);
+
+			context.SaveChanges();
+			
+
+			context.Posts.AddOrUpdate(
+				post => post.Title,
+				new Post { Title = "Test Post", DatePosted = DateTime.Now, Author = adminUser },
+				new Post { Title = "Test Post 2", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() }
+			);
+
+			context.SaveChanges();
         }
     }
 }

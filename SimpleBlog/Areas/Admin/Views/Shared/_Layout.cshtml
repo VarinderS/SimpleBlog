@@ -36,9 +36,8 @@
 			        @if (User.Identity.IsAuthenticated)
 			        {
 				        @:Hello @User.Identity.Name
-
-
-				        <a href="@Url.Action(actionName: "Logout", controllerName: "Account")">Logout</a>
+						
+				        <a href="@Url.Action(actionName: "Logout", controllerName: "Account", routeValues: new { area = string.Empty })">Logout</a>
 			        }
 			        else
 			        {
