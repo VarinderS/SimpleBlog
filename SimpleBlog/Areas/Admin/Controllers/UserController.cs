@@ -3,7 +3,7 @@
 namespace SimpleBlog.Areas.Admin.Controllers
 {
 	[Authorize(Roles = "Admin")]
-	public class PostController : Controller
+	public class UserController : Controller
 	{
 		public ActionResult Index()
 		{
