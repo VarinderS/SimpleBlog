@@ -1,7 +1,73 @@
-﻿
+﻿@model SimpleBlog.Areas.Admin.ViewModels.UserIndex
+
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Users</h2>
 
+<p>
+	<a href="@Url.Action(actionName: "Add")" class="btn btn-default">Add a user</a>
+</p>
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>User Name</th>
+			<th>Roles</th>
+			<th>Email</th>
+			<th>Email Confirmed</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var userWithRole in Model.UsersWithRoles)
+		{
+			<tr>
+				<td>@userWithRole.User.UserName</td>
+				<td>@string.Join(", ", userWithRole.Roles.Select(role => role.Name))</td>
+				<td>@userWithRole.User.Email</td>
+				<td>@userWithRole.User.EmailConfirmed</td>
+				<td><a href="@Url.Action(actionName: "Edit", routeValues: new { userWithRole.User.Id })">Edit</a></td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<nav>
+	<ul class="pager">
+		@if (Model.UsersWithRoles.HasPreviousPage)
+		{
+		<li class="previous">
+			<a href="@Url.Action(actionName: "Index", routeValues: new {pageNumber = Model.UsersWithRoles.PreviousPage})">
+				<span aria-hidden="true">&larr;</span> Previous
+			</a>
+		</li>
+		}
+		else
+		{
+		<li class="previous disabled">
+			<a href="#">
+				<span aria-hidden="true">&larr;</span> Previous
+			</a>
+		</li>
+		}
+
+		@if (Model.UsersWithRoles.HasNextPage)
+		{
+		<li class="next">
+			<a href="@Url.Action(actionName: "Index", routeValues: new {pageNumber = Model.UsersWithRoles.NextPage})">
+				Next <span aria-hidden="true">&rarr;</span>
+			</a>
+		</li>
+		}
+		else
+		{
+		<li class="next disabled">
+			<a href="#">
+				Next <span aria-hidden="true">&rarr;</span>
+			</a>
+		</li>
+		}
+	</ul>
+</nav>

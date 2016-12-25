@@ -1,0 +1,66 @@
+﻿@model SimpleBlog.Areas.Admin.ViewModels.UserEdit
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "User", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal", role = "form" }))
+{
+	@Html.AntiForgeryToken()
+
+	<h4>Edit @Model.UserName</h4>
+
+	<hr />
+
+	@Html.ValidationSummary("", new { @class = "text-danger" })
+
+	@Html.HiddenFor(m => m.Id)
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.FullName, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.Roles, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@for (int i = 0; i < Model.Roles.Count; i++)
+			{
+				var role = Model.Roles[index: i];
+
+				<div class="checkbox">
+					<label>
+						@Html.Hidden(name: "Roles[" + i + "].Id", value: role.Id)
+						@Html.Hidden(name: "Roles[" + i + "].Name", value: role.Name)
+						@Html.CheckBox(name: "Roles[" + i + "].IsChecked", isChecked: role.IsChecked)
+						@role.Name
+					</label>
+				</div>
+			}
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" class="btn btn-default" value="Update" /> or <a href="@Url.Action(actionName: "Index")">Cancel</a>
+		</div>
+	</div>
+}
