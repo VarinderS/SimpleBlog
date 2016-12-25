@@ -18,6 +18,15 @@ namespace SimpleBlog.Areas.Admin.ViewModels
 
 		public string Description { get; set; }
 
-		public IList<Tag> Tags { get; set; }
+		public IList<TagCheckbox> Tags { get; set; }
+	}
+
+	public class TagCheckbox
+	{
+		public int Id { get; set; }
+
+		public string Name { get; set; }
+
+		public bool IsChecked { get; set; }
 	}
 }

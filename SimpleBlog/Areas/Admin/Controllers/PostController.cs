@@ -27,6 +27,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
 			var posts = DbContext.Posts
 								.Include(path: "Author")
+								.Include(path: "Tags")
 								.Where(predicate: post => postIds.Contains(post.Id))
 								.ToList();
 
@@ -44,7 +45,14 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
 		public ActionResult Create()
 		{
-			return View();
+			var tags = DbContext.Tags.OrderBy(keySelector: tag => tag.Name).Select(selector: tag => new TagCheckbox { Id = tag.Id, Name = tag.Name }).ToList();
+
+            var createPostViewModel = new PostCreate
+			{
+				Tags = tags
+			};
+
+			return View(createPostViewModel);
 		}
 
 
@@ -58,12 +66,17 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
 			var currentUser = UserManager.FindById(userId: User.Identity.GetUserId());
 
+			var selectedTagIds = form.Tags.Where(predicate: tag => tag.IsChecked == true).Select(selector: tag => tag.Id);
+
+			var tags = DbContext.Tags.Where(predicate: tag => selectedTagIds.Contains(tag.Id)).ToList();
+
 			var post = new Post
 			{
 				Title = form.Title,
 				Description = form.Description,
 				Author = currentUser,
-				DatePosted = DateTime.Now
+				DatePosted = DateTime.Now,
+				Tags = tags
 			};
 
 			DbContext.Posts.Add(entity: post);
