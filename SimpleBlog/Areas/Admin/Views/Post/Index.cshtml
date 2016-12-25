@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SimpleBlog.Models.Post>
+﻿@model SimpleBlog.Areas.Admin.ViewModels.PostIndex
 
 @{
     ViewBag.Title = "Index";
@@ -12,18 +12,18 @@
 
 <table class="table table-bordered">
 	<thead>
-		<tr>
-			<th>Title</th>
-			<th>Tags</th>
-			<th>Content</th>
-			<th>Author</th>
-			<th>Date Created</th>
-		</tr>
+	<tr>
+		<th>Title</th>
+		<th>Tags</th>
+		<th>Content</th>
+		<th>Author</th>
+		<th>Date Created</th>
+	</tr>
 	</thead>
 	<tbody>
 
-		@foreach (var post in Model)
-		{
+	@foreach (var post in Model.Posts)
+	{
 		<tr>
 			<td>@post.Title</td>
 			<td>@String.Join(separator: ", ", values: post.Tags.Select(selector: tag => tag.Name))</td>
@@ -31,6 +31,44 @@
 			<td>@(post.Author == null ? "Unknown" : post.Author.UserName)</td>
 			<td>@post.DatePosted</td>
 		</tr>
-		}
+	}
 	</tbody>
 </table>
+
+<nav>
+	<ul class="pager">
+		@if (Model.Posts.HasPreviousPage)
+		{
+		<li class="previous">
+			<a href="@Url.Action(actionName: "Index", routeValues: new {pageNumber = Model.Posts.PreviousPage})">
+				<span aria-hidden="true">&larr;</span> Previous
+			</a>
+		</li>
+		}
+		else
+		{
+		<li class="previous disabled">
+			<a href="#">
+				<span aria-hidden="true">&larr;</span> Previous
+			</a>
+		</li>
+		}
+
+		@if (Model.Posts.HasNextPage)
+		{
+		<li class="next">
+			<a href="@Url.Action(actionName: "Index", routeValues: new {pageNumber = Model.Posts.NextPage})">
+				Next <span aria-hidden="true">&rarr;</span>
+			</a>
+		</li>
+		}
+		else
+		{
+		<li class="next disabled">
+			<a href="#">
+				Next <span aria-hidden="true">&rarr;</span>
+			</a>
+		</li>
+		}
+	</ul>
+</nav>

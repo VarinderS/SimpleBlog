@@ -175,6 +175,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\PagedData.cs" />
     <Compile Include="Migrations\201612240536223_InitalModel.cs" />
     <Compile Include="Migrations\201612240536223_InitalModel.Designer.cs">
       <DependentUpon>201612240536223_InitalModel.cs</DependentUpon>

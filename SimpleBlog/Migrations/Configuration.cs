@@ -79,7 +79,17 @@ namespace SimpleBlog.Migrations
 			context.Posts.AddOrUpdate(
 				post => post.Title,
 				new Post { Title = "Test Post", DatePosted = DateTime.Now, Author = adminUser },
-				new Post { Title = "Test Post 2", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() }
+				new Post { Title = "Test Post 2", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() },
+				new Post { Title = "Test Post 3", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(1).ToList() },
+				new Post { Title = "Test Post 4", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() },
+				new Post { Title = "Test Post 5", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(1).ToList() },
+				new Post { Title = "Test Post 6", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() },
+				new Post { Title = "Test Post 7", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(1).ToList() },
+				new Post { Title = "Test Post 8", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() },
+				new Post { Title = "Test Post 9", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(1).ToList() },
+				new Post { Title = "Test Post 10", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() },
+				new Post { Title = "Test Post 11", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(1).ToList() },
+				new Post { Title = "Test Post 12", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() }
 			);
 
 			context.SaveChanges();

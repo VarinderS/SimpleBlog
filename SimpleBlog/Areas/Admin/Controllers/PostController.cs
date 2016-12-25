@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SimpleBlog.Areas.Admin.ViewModels;
 using SimpleBlog.Controllers;
+using SimpleBlog.Infrastructure;
 using SimpleBlog.Models;
 
 namespace SimpleBlog.Areas.Admin.Controllers
@@ -11,11 +12,33 @@ namespace SimpleBlog.Areas.Admin.Controllers
 	[Authorize(Roles = "Admin")]
 	public class PostController : BaseController
 	{
-		public ActionResult Index()
+		public ActionResult Index(int pageNumber = 1)
 		{
-			var posts = DbContext.Posts.Include("Author").ToList();
+			var pageSize = 5;
 
-			return View(posts);
+			var totalPosts = DbContext.Posts.Count();
+
+			var postIds = DbContext.Posts
+									.OrderBy(keySelector: post => post.Title)
+									.Skip(count: (pageSize * (pageNumber - 1)))
+									.Take(count: pageSize)
+									.Select(selector: post => post.Id)
+									.ToArray();
+
+			var posts = DbContext.Posts
+								.Include(path: "Author")
+								.Where(predicate: post => postIds.Contains(post.Id))
+								.ToList();
+
+			var pagedPosts = new PagedData<Post>(items: posts, pageSize: pageSize, pageNumber: pageNumber, totalItems: totalPosts);
+
+			var postsViewModel = new PostIndex { Posts = pagedPosts };
+
+			return View(postsViewModel);
+
+			//var posts = DbContext.Posts.ToList();
+
+			//return View(posts);	
 		}
 
 

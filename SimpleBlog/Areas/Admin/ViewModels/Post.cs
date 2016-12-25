@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using SimpleBlog.Infrastructure;
 using SimpleBlog.Models;
 
 namespace SimpleBlog.Areas.Admin.ViewModels
 {
 	public class PostIndex
 	{
-		public string Title { get; set; }
-
-		public string Description { get; set; }
-
-		public IList<Tag> Tags { get; set; }
+		public PagedData<Post> Posts { get; set; }
 	}
 
 	public class PostCreate
