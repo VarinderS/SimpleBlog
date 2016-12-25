@@ -18,6 +18,7 @@
 		<th>Content</th>
 		<th>Author</th>
 		<th>Date Created</th>
+		<th>Actions</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -30,6 +31,9 @@
 			<td>@Html.Raw(value: post.Description)</td>
 			<td>@(post.Author == null ? "Unknown" : post.Author.UserName)</td>
 			<td>@post.DatePosted</td>
+			<td>
+				<a href="@Url.Action(actionName: "Edit", routeValues: new { post.Id })">Edit</a>
+			</td>
 		</tr>
 	}
 	</tbody>

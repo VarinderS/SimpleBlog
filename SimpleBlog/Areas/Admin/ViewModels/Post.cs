@@ -21,6 +21,17 @@ namespace SimpleBlog.Areas.Admin.ViewModels
 		public IList<TagCheckbox> Tags { get; set; }
 	}
 
+	public class PostEdit
+	{
+		public int Id { get; set; }
+
+		public string Title { get; set; }
+
+		public string Description { get; set; }
+
+		public IList<TagCheckbox> Tags { get; set; }
+	}
+
 	public class TagCheckbox
 	{
 		public int Id { get; set; }

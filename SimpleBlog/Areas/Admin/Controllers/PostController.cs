@@ -85,5 +85,67 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
 			return RedirectToAction(actionName: "Index");
 		}
+		
+
+		public ActionResult Edit(int id = 0)
+		{
+			if (id == 0)
+			{
+				return new HttpNotFoundResult(statusDescription: "Unable to find post");
+			}
+
+			var selectedPost = DbContext.Posts.Include(path: "Tags").Single(predicate: post => post.Id == id);
+
+			if (selectedPost == null)
+			{
+				return new HttpNotFoundResult(statusDescription: "Unable to find post");
+			}
+
+			var selectedTagIds = selectedPost.Tags.Select(selector: tag => tag.Id).ToArray();
+
+			var tagList = DbContext.Tags.Select(selector: tag => new TagCheckbox { Id = tag.Id, Name = tag.Name, IsChecked = selectedTagIds.Contains(tag.Id) }).ToList();
+
+			var postEditViewModel = new PostEdit
+			{
+				Title = selectedPost.Title,
+				Description = selectedPost.Description,
+				Tags = tagList
+			};
+
+			return View(postEditViewModel);
+		}
+
+		[HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Edit(PostEdit form)
+		{
+			if (ModelState.IsValid == false)
+			{
+				return View(form);
+			}
+
+			var selectedPost = DbContext.Posts.Include("Tags").Include(path: "Author").Single(predicate: post => post.Id == form.Id);
+
+			var currentUserId = User.Identity.GetUserId();
+
+			if (currentUserId != selectedPost.Author.Id)
+			{
+				ModelState.AddModelError(key: "", errorMessage: "Not authorized to update the post");
+
+				return View(form);
+			}
+
+
+			var selectedTagIds = form.Tags.Where(predicate: tag => tag.IsChecked == true).Select(selector: tag => tag.Id).ToArray();
+
+			var tags = DbContext.Tags.Where(predicate: tag => selectedTagIds.Contains(tag.Id)).ToList();
+
+			selectedPost.Title = form.Title;
+			selectedPost.Description = form.Description;
+			selectedPost.Tags = tags;
+
+			DbContext.SaveChanges();
+
+			return RedirectToAction(actionName: "Index");
+		}
 	}
 }
