@@ -159,7 +159,68 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
 			return RedirectToAction(actionName: "Index");
 		}
-	
+		
+
+		[HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Delete(int id = 0)
+		{
+			if (id == 0)
+			{
+				return new HttpNotFoundResult(statusDescription: "Post not found");
+			}
+
+			var post = DbContext.Posts.Include(path: "Author").SingleOrDefault(predicate: p => p.Id == id);
+
+			if (post == null)
+			{
+				return new HttpNotFoundResult(statusDescription: "Post not found");
+			}
+
+			var currentUserId = User.Identity.GetUserId();
+
+			if (currentUserId != post.Author.Id)
+			{
+				return new HttpNotFoundResult(statusDescription: "Not authorized to delee post");
+			}
+
+
+			post.DateDeleted = DateTime.Now;
+
+			DbContext.SaveChanges();
+
+			return RedirectToAction(actionName: "Index");
+		}
+
+
+		[HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Recover(int id = 0)
+		{
+			if (id == 0)
+			{
+				return new HttpNotFoundResult(statusDescription: "Post not found");
+			}
+
+			var post = DbContext.Posts.Include(path: "Author").SingleOrDefault(predicate: p => p.Id == id);
+
+			if (post == null)
+			{
+				return new HttpNotFoundResult(statusDescription: "Post not found");
+			}
+
+			var currentUserId = User.Identity.GetUserId();
+
+			if (currentUserId != post.Author.Id)
+			{
+				return new HttpNotFoundResult(statusDescription: "Not authorized to delee post");
+			}
+
+
+			post.DateDeleted = null;
+
+			DbContext.SaveChanges();
+
+			return RedirectToAction(actionName: "Index");
+		}
 		
 		private IEnumerable<Tag> ReconsileTags(IEnumerable<TagCheckbox> tags)
 		{

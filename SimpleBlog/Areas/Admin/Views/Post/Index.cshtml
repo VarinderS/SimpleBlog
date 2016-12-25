@@ -25,14 +25,22 @@
 
 	@foreach (var post in Model.Posts)
 	{
-		<tr>
+		<tr class="@(post.IsDeleted ? "danger" : "")">
 			<td>@post.Title</td>
 			<td>@String.Join(separator: ", ", values: post.Tags.Select(selector: tag => tag.Name))</td>
 			<td>@Html.Raw(value: post.Description)</td>
 			<td>@(post.Author == null ? "Unknown" : post.Author.UserName)</td>
 			<td>@post.DatePosted</td>
 			<td>
-				<a href="@Url.Action(actionName: "Edit", routeValues: new { post.Id })">Edit</a>
+				<a href="@Url.Action(actionName: "Edit", routeValues: new { post.Id })">Edit</a> |
+				@if (post.IsDeleted)
+				{
+				<a data-confirm="" href="@Url.Action(actionName: "Recover", routeValues: new { post.Id })" class="text-danger">Recover</a>
+				}
+				else
+				{
+				<a data-confirm="Are you sure you want to delete: @post.Title" href="@Url.Action(actionName: "Delete", routeValues: new { post.Id })" class="text-danger">Delete</a>
+				}
 			</td>
 		</tr>
 	}
@@ -76,3 +84,41 @@
 		}
 	</ul>
 </nav>
+
+@section Scripts
+{
+	<script type="text/javascript">
+		(function($) {
+
+			var $confirmItems = $("[data-confirm]");
+
+			var $body = $("body");
+
+			$confirmItems.on("click", function(e) {
+
+				e.preventDefault();
+
+				var $this = $(this);
+
+				var url = $this.attr("href");
+
+				var confirmation = $this.attr("data-confirm");
+				
+				var confirmed = true;
+
+				if (confirmation) {
+					
+					confirmed = window.confirm(confirmation);
+				} 
+
+				if (confirmed) {
+					
+					var $antiForgeryTokenElement = $(".js-anti-forgery-token").clone();
+
+					$("<form/>").attr("action", url).attr("method", "post").append($antiForgeryTokenElement).appendTo($body).submit();
+				}
+			});
+
+		})(jQuery);
+	</script>
+}

@@ -21,6 +21,14 @@ namespace SimpleBlog.Models
 
 		public ApplicationUser Author { get; set; }
 
+		public bool IsDeleted
+		{
+			get
+			{
+				return DateDeleted != null;
+			}
+		}
+
 		public Post()
 		{
 			Tags = new List<Tag>();
