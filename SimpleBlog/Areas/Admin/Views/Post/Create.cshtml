@@ -31,19 +31,41 @@
 
 	<div class="form-group">
 		@Html.LabelFor(m => m.Tags, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			@for (int i = 0; i < Model.Tags.Count; i++)
-			{
-				var tag = Model.Tags[index: i];
 
-				<div class="checkbox">
-					<label>
-						<input type="hidden" name="Tags[@(i)].Id" value="@tag.Id" />
-						<input type="hidden" name="Tags[@(i)].Name" value="@tag.Name"/>
-						@Html.CheckBox(name: "Tags[" + i + "].IsChecked", isChecked: tag.IsChecked) @tag.Name
-					</label>
+		<div class="col-md-10">
+			<div class="js-tag-selector">
+				<div class="input-group" style="width: 280px;">
+					<input type="text" class="form-control js-tag-selector-input" placeholder="Tag...">
+					<span class="input-group-btn">
+						<button class="btn btn-default disabled js-tag-selector-submit" type="button">Add</button>
+					</span>
 				</div>
-			}
+				<div class="tag-selector-body">
+					@for (int i = 0; i < Model.Tags.Count; i++)
+					{
+						var tag = Model.Tags[index: i];
+
+						<div class="checkbox" data-tag-id="@(i)">
+							<label>
+								<input type="hidden" name="Tags[@(i)].Id" value="@tag.Id" />
+								<input type="hidden" name="Tags[@(i)].Name" value="@tag.Name" />
+								<input class="js-tag-is-checked" type="checkbox" name="Tags[@(i)].IsChecked" value="@tag.IsChecked.ToString()" />
+								<span class="js-tag-name-text">@tag.Name</span>
+							</label>
+						</div>
+					}
+				</div>
+				<div class="js-tag-selector-template hide">
+					<div class="checkbox">
+						<label>
+							<input class="js-tag-id" type="hidden" />
+							<input class="js-tag-name" type="hidden" />
+							<input class="js-tag-is-checked" type="checkbox" value="true" />
+							<span class="js-tag-name-text"></span>
+						</label>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -52,4 +74,9 @@
 			<input type="submit" class="btn btn-default" value="Create"/> or <a href="@Url.Action(actionName: "Index")">Cancel</a>
 		</div>
 	</div>
+}
+
+@section Scripts
+{
+	<script type="text/javascript" src="~/Scripts/TagSelector.js"></script>
 }

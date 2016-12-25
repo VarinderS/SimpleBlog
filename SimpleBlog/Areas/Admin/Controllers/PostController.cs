@@ -6,6 +6,7 @@ using SimpleBlog.Areas.Admin.ViewModels;
 using SimpleBlog.Controllers;
 using SimpleBlog.Infrastructure;
 using SimpleBlog.Models;
+using System.Collections.Generic;
 
 namespace SimpleBlog.Areas.Admin.Controllers
 {
@@ -66,9 +67,20 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
 			var currentUser = UserManager.FindById(userId: User.Identity.GetUserId());
 
-			var selectedTagIds = form.Tags.Where(predicate: tag => tag.IsChecked == true).Select(selector: tag => tag.Id);
 
-			var tags = DbContext.Tags.Where(predicate: tag => selectedTagIds.Contains(tag.Id)).ToList();
+			//var newTags = form.Tags.Where(predicate: tag => tag.Id == null).Select(selector: tag => new Tag { Name = tag.Name });
+
+			//if (newTags.Any())
+			//{
+			//	DbContext.Tags.AddRange(entities: newTags);
+
+			//	DbContext.SaveChanges();
+			//}
+
+
+			//var selectedTagIds = form.Tags.Where(predicate: tag => tag.IsChecked == true).Select(selector: tag => tag.Id);
+
+			var tags = ReconsileTags(form.Tags).ToList(); // DbContext.Tags.Where(predicate: tag => selectedTagIds.Contains(tag.Id)).ToList();
 
 			var post = new Post
 			{
@@ -137,7 +149,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
 			var selectedTagIds = form.Tags.Where(predicate: tag => tag.IsChecked == true).Select(selector: tag => tag.Id).ToArray();
 
-			var tags = DbContext.Tags.Where(predicate: tag => selectedTagIds.Contains(tag.Id)).ToList();
+			var tags = ReconsileTags(tags: form.Tags).ToList();
 
 			selectedPost.Title = form.Title;
 			selectedPost.Description = form.Description;
@@ -146,6 +158,38 @@ namespace SimpleBlog.Areas.Admin.Controllers
 			DbContext.SaveChanges();
 
 			return RedirectToAction(actionName: "Index");
+		}
+	
+		
+		private IEnumerable<Tag> ReconsileTags(IEnumerable<TagCheckbox> tags)
+		{
+			foreach (var tag in tags.Where(t => t.IsChecked))
+			{
+				if (tag.Id != null)
+				{
+					yield return DbContext.Tags.Single(predicate: t => t.Id == tag.Id);
+
+					continue;
+				}
+
+				var existingTag = DbContext.Tags.SingleOrDefault(predicate: t => t.Name == tag.Name);
+
+				if (existingTag != null)
+				{
+					yield return existingTag;
+
+					continue;
+				}
+
+
+				var newTag = new Tag { Name = tag.Name };
+
+				DbContext.Tags.Add(entity: newTag);
+
+				DbContext.SaveChanges();
+
+				yield return newTag;
+			}
 		}
 	}
 }
