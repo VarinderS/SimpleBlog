@@ -20,7 +20,15 @@
 	<div class="form-group">
 		@Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
 		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+			@Html.TextBoxFor(m => m.Title, new { @class = "form-control js-post-title" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.Slug, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			<p class="form-control-static js-slug-input-display">@Model.Slug</p>
+			@Html.HiddenFor(m => m.Slug, new { @class = "form-control disabled js-slug-input", data_slugFrom = ".js-post-title" })
 		</div>
 	</div>
 
@@ -82,4 +90,6 @@
 @section Scripts
 {
 	<script type="text/javascript" src="~/Scripts/TagSelector.js"></script>
+
+	<script type="text/javascript" src="~/Scripts/Slug.js"></script>
 }

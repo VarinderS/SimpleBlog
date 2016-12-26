@@ -122,6 +122,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 			var postEditViewModel = new PostEdit
 			{
 				Title = selectedPost.Title,
+				Slug = selectedPost.Slug,
 				Description = selectedPost.Description,
 				Tags = tagList
 			};
