@@ -14,6 +14,8 @@ namespace SimpleBlog
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+			routes.LowercaseUrls = true;
+
 			var nameSpaces = new string[] { typeof(PostController).Namespace };
 
 			routes.MapRoute(

@@ -17,6 +17,8 @@ namespace SimpleBlog.Areas.Admin
         {
 			var nameSpaces = new string[] { typeof(PostController).Namespace };
 
+			context.Routes.LowercaseUrls = true;
+
 			context.MapRoute(
                 "Admin_default",
                 "admin/{controller}/{action}/{id}",
