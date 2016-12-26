@@ -16,7 +16,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 	{
 		public ActionResult Index(int pageNumber = 1)
 		{
-			var pageSize = 5;
+			var pageSize = 20;
 
 			var totalPosts = DbContext.Posts.Count();
 
