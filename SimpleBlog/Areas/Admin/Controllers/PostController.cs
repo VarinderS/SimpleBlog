@@ -130,7 +130,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 			return View(postEditViewModel);
 		}
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost, ValidateAntiForgeryToken, ValidateInput(enableValidation: false)]
 		public ActionResult Edit(PostEdit form)
 		{
 			if (ModelState.IsValid == false)
