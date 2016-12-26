@@ -1,10 +1,10 @@
-﻿@model SimpleBlog.ViewModels.HomeIndex
+﻿@model SimpleBlog.ViewModels.TagIndex
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Posts</h2>
+<h2>Viewing posts with tag: @Model.Tag.Name</h2>
 
 <div class="row">
 	<div class="col-md-8">
@@ -14,7 +14,7 @@
 		@foreach (var post in Model.Posts)
 		{
 			counter = counter + 1;
-			
+
 			<div class="post-section">
 				<h4>
 					<a href="@Url.Action(actionName: "Details", controllerName: "Post", routeValues: new { id = post.Id, slug = post.Slug })">
@@ -23,20 +23,20 @@
 				</h4>
 				<p><strong>Posted on:</strong> @post.DatePosted.ToString(format: "dd MMMM, yyyy h:mm tt")</p>
 				<p><strong>By:</strong> @post.Author.UserName</p>
-				
+
 				@Html.Raw(value: post.Description)
 
 				<p>
 					@foreach (var tag in post.Tags)
 					{
-						<a href="@Url.Action(actionName: "Index", controllerName: "Tag", routeValues: new { id = tag.Id, slug = tag.Slug })" class="badge">@tag.Name</a>
-                    }
+					<a href="@Url.Action(actionName: "Index", controllerName: "Tag", routeValues: new { id = tag.Id, slug = tag.Slug })" class="badge">@tag.Name</a>
+					}
 				</p>
 			</div>
 
 			if (counter < Model.Posts.Count())
 			{
-				<hr />
+			<hr />
 			}
 		}
 
@@ -85,7 +85,7 @@
 				@foreach (var tag in Model.Tags)
 				{
 				<li class="list-group-item">
-					<a href="@Url.Action(actionName: "Index", controllerName: "Tag", routeValues: new { id = tag.Id, slug = tag.Slug })">@tag.Name</a>
+					<a href="@Url.Action(actionName: "Index", controllerName: "Tag", routeValues: new { id = tag.Id, slug = tag.Slug })" class="@(tag.Id == Model.Tag.Id ? "active" : "")">@tag.Name</a>
 				</li>
 				}
 			</ul>

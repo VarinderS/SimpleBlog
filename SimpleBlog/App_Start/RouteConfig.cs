@@ -23,6 +23,13 @@ namespace SimpleBlog
 				namespaces: nameSpaces
 			);
 
+			routes.MapRoute(
+				name: "TagDetails",
+				url: "Tag/{id}/{slug}/{pageNumber}",
+				defaults: new { controller = "Tag", action = "Index", id = UrlParameter.Optional, slug = UrlParameter.Optional, pageNumber = UrlParameter.Optional },
+				namespaces: nameSpaces
+			);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

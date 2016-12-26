@@ -288,6 +288,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="EntityConfigurations\PostConfiguration.cs" />
     <Compile Include="EntityConfigurations\TagConfiguration.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -321,6 +322,7 @@
     <Compile Include="ViewModels\Account.cs" />
     <Compile Include="ViewModels\Home.cs" />
     <Compile Include="ViewModels\Post.cs" />
+    <Compile Include="ViewModels\Tag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -333,6 +335,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\Tag\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

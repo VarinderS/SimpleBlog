@@ -20,7 +20,7 @@
 		<p>
 			@foreach (var tag in Model.Post.Tags)
 			{
-			<a href="@Url.Action(actionName: "Tag", routeValues: new { slug = tag.Slug })" class="badge">@tag.Name</a>
+			<a href="@Url.Action(actionName: "Index", controllerName: "Tag", routeValues: new { id = tag.Id, slug = tag.Slug })" class="badge">@tag.Name</a>
 			}
 		</p>
 
@@ -42,7 +42,7 @@
 				@foreach (var tag in Model.Tags)
 				{
 				<li class="list-group-item">
-					<a href="@Url.Action(actionName: "Tag", routeValues: new { slug = tag.Slug })">@tag.Name</a>
+					<a href="@Url.Action(actionName: "Index", controllerName: "Tag", routeValues: new { id = tag.Id, slug = tag.Slug })">@tag.Name</a>
 				</li>
 				}
 			</ul>
