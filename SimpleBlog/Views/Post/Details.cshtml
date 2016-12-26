@@ -1,0 +1,51 @@
+﻿@model SimpleBlog.ViewModels.PostDetails
+
+@{
+	ViewBag.Title = "Details";
+}
+
+<h2>
+	<a href="@Url.Action(actionName: "Details", controllerName: "Post", routeValues: new { id = Model.Post.Id, slug = Model.Post.Slug })">
+		@Model.Post.Title
+	</a>
+</h2>
+
+<div class="row">
+	<div class="col-md-8">
+		<p><strong>Posted on:</strong> @Model.Post.DatePosted.ToString(format: "dd MMMM, yyyy h:mm tt")</p>
+		<p><strong>By:</strong> @Model.Post.Author.UserName</p>
+
+		@Html.Raw(value: Model.Post.Description)
+
+		<p>
+			@foreach (var tag in Model.Post.Tags)
+			{
+			<a href="@Url.Action(actionName: "Tag", routeValues: new { slug = tag.Slug })" class="badge">@tag.Name</a>
+			}
+		</p>
+
+		<nav>
+			<ul class="pager">
+				<li class="previous">
+					<a href="@Url.Action(actionName: "Index", controllerName: "Home")">
+						<span aria-hidden="true">&larr;</span> Home
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Tags</div>
+			<ul class="list-group">
+				@foreach (var tag in Model.Tags)
+				{
+				<li class="list-group-item">
+					<a href="@Url.Action(actionName: "Tag", routeValues: new { slug = tag.Slug })">@tag.Name</a>
+				</li>
+				}
+			</ul>
+		</div>
+	</div>
+</div>
