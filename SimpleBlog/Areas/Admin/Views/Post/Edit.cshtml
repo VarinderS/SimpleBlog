@@ -17,32 +17,32 @@
 
 	@Html.HiddenFor(m => m.Id)
 
-	<div class="form-group">
-		@Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.Title, new { @class = "form-control js-post-title" })
+	<div class="clearfix">
+		<div class="col-md-8">
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						@Html.LabelFor(m => m.Title)
+						@Html.TextBoxFor(m => m.Title, new { @class = "form-control js-post-title" })
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						@Html.LabelFor(m => m.Slug)
+						<p class="form-control-static form-control-static-styled js-slug-input-display">@Model.Slug</p>
+						@Html.HiddenFor(m => m.Slug, new { @class = "form-control disabled js-slug-input", data_slugFrom = ".js-post-title" })
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(m => m.Description)
+				@Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+			</div>
 		</div>
-	</div>
-
-	<div class="form-group">
-		@Html.LabelFor(m => m.Slug, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			<p class="form-control-static js-slug-input-display">@Model.Slug</p>
-			@Html.HiddenFor(m => m.Slug, new { @class = "form-control disabled js-slug-input", data_slugFrom = ".js-post-title" })
-		</div>
-	</div>
-
-	<div class="form-group">
-		@Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
-		<div class="col-md-10">
-			@Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-		</div>
-	</div>
-
-	<div class="form-group">
-		@Html.LabelFor(m => m.Tags, new { @class = "col-md-2 control-label" })
-
-		<div class="col-md-10">
+		<div class="col-md-4">
+			@Html.LabelFor(m => m.Tags)
 			<div class="js-tag-selector">
 				<div class="input-group" style="width: 280px;">
 					<input type="text" class="form-control js-tag-selector-input" placeholder="Tag...">
@@ -59,8 +59,7 @@
 							<label>
 								<input type="hidden" name="Tags[@(i)].Id" value="@tag.Id" />
 								<input type="hidden" name="Tags[@(i)].Name" value="@tag.Name" />
-								<input class="js-tag-is-checked" type="checkbox" name="Tags[@(i)].IsChecked" value="@tag.IsChecked.ToString()" checked="@tag.IsChecked" />
-								<input type="hidden" name="Tags[@(i)].IsChecked" value="@tag.IsChecked.ToString()" />
+								<input class="js-tag-is-checked" type="checkbox" name="Tags[@(i)].IsChecked" value="@tag.IsChecked.ToString()" />
 								<span class="js-tag-name-text">@tag.Name</span>
 							</label>
 						</div>
@@ -81,8 +80,8 @@
 	</div>
 
 	<div class="form-group">
-		<div class="col-md-offset-2 col-md-10">
-			<input type="submit" class="btn btn-default" value="Update" /> or <a href="@Url.Action(actionName: "Index")">Cancel</a>
+		<div class="col-md-12">
+			<input type="submit" class="btn btn-primary" value="Update" /> or <a href="@Url.Action(actionName: "Index")">Cancel</a>
 		</div>
 	</div>
 }
@@ -92,4 +91,14 @@
 	<script type="text/javascript" src="~/Scripts/TagSelector.js"></script>
 
 	<script type="text/javascript" src="~/Scripts/Slug.js"></script>
+
+	<script type="text/javascript" src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+	<script type="text/javascript">
+		(function () {
+			
+			CKEDITOR.replace("Description");
+
+		})();
+	</script>
 }

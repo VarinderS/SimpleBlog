@@ -16,3 +16,9 @@ textarea {
     max-width: 280px;
 }
 
+.form-control-static-styled {
+	padding: 6px 10px;
+	background: #ededed;
+	height: 34px;
+	border-radius: 4px;
+}
