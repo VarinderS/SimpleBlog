@@ -165,7 +165,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 		}
 		
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost, ValidateAntiForgeryToken, ValidateInput(enableValidation: false)]
 		public ActionResult Delete(int id = 0)
 		{
 			if (id == 0)
