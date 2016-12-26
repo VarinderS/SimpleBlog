@@ -21,7 +21,8 @@
 						@post.Title
 					</a>
 				</h4>
-				<p><strong>Author:</strong> @post.Author.UserName</p>
+				<p><strong>Posted on:</strong> @post.DatePosted.ToString(format: "dd MMMM, yyyy h:mm tt")</p>
+				<p><strong>By:</strong> @post.Author.UserName</p>
 				
 				@Html.Raw(value: post.Description)
 
