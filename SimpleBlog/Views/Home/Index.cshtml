@@ -1,6 +1,94 @@
-﻿@{
+﻿@model SimpleBlog.ViewModels.HomeIndex
+
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Posts</h2>
 
+<div class="row">
+	<div class="col-md-8">
+
+		@{ var counter = 0; }
+
+		@foreach (var post in Model.Posts)
+		{
+			counter = counter + 1;
+			
+			<div class="post-section">
+				<h4>
+					<a href="@Url.Action(actionName: "Post", routeValues: new { slug = post.Slug })">
+						@post.Title
+					</a>
+				</h4>
+				<p><strong>Author:</strong> @post.Author.UserName</p>
+				
+				@Html.Raw(value: post.Description)
+
+				<p>
+					@foreach (var tag in post.Tags)
+					{
+						<a href="@Url.Action(actionName: "Tag", routeValues: new { slug = tag.Slug })" class="badge">@tag.Name</a>
+                    }
+				</p>
+			</div>
+
+			if (counter < Model.Posts.Count())
+			{
+				<hr />
+			}
+		}
+
+		<nav>
+			<ul class="pager">
+				@if (Model.Posts.HasPreviousPage)
+				{
+				<li class="previous">
+					<a href="@Url.Action(actionName: "Index", routeValues: new {pageNumber = Model.Posts.PreviousPage})">
+						<span aria-hidden="true">&larr;</span> Previous
+					</a>
+				</li>
+				}
+				else
+				{
+				<li class="previous disabled">
+					<a href="#">
+						<span aria-hidden="true">&larr;</span> Previous
+					</a>
+				</li>
+				}
+
+				@if (Model.Posts.HasNextPage)
+				{
+				<li class="next">
+					<a href="@Url.Action(actionName: "Index", routeValues: new {pageNumber = Model.Posts.NextPage})">
+						Next <span aria-hidden="true">&rarr;</span>
+					</a>
+				</li>
+				}
+				else
+				{
+				<li class="next disabled">
+					<a href="#">
+						Next <span aria-hidden="true">&rarr;</span>
+					</a>
+				</li>
+				}
+			</ul>
+		</nav>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Tags</div>
+			<ul class="list-group">
+				@foreach (var tag in Model.Tags)
+				{
+				<li class="list-group-item">
+					<a href="@Url.Action(actionName: "Tag", routeValues: new { slug = tag.Slug })">@tag.Name</a>
+				</li>
+				}
+			</ul>
+
+		</div>
+	</div>
+</div>

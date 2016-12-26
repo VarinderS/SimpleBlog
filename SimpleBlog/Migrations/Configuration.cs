@@ -102,6 +102,7 @@ namespace SimpleBlog.Migrations
 				}
 			}
 
+			// var description = @"<p>Lorizzle fo gizzle bizzle shiz, dope adipiscing elit. Break yo neck, yall sapizzle velizzle, bow wow wow volutpizzle, mah nizzle quizzle, gravida vizzle, i saw beyonces tizzles and my pizzle went crizzle. Pellentesque doggy tortizzle. Doggy erizzle. Crunk izzle dolizzle dapibizzle gangster tempus tempor. Mauris gizzle nibh et turpis. Stuff izzle tortor. Pellentesque eleifend rhoncizzle nisi. Its fo rizzle hac habitasse platea nizzle. dapibizzle. Fo shizzle tellizzle urna, pretizzle rizzle, pizzle get down get down, eleifend vitae, nunc. Yo mamma rizzle. Integer semper fo shizzle sizzle purus.</p>";
 
 			foreach (var post in context.Posts)
 			{
@@ -109,6 +110,8 @@ namespace SimpleBlog.Migrations
 				{
 					post.Slug = post.Title.Sluggify();
 				}
+
+				// post.Description = description;
 			}
 
 
