@@ -58,7 +58,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 		}
 
 
-		[HttpPost, ValidateAntiForgeryToken]
+		[HttpPost, ValidateAntiForgeryToken, ValidateInput(enableValidation: false)]
 		public ActionResult Create(PostCreate form)
 		{
 			if (ModelState.IsValid == false)
