@@ -5,12 +5,13 @@ using SimpleBlog.Models;
 
 namespace SimpleBlog.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+	using Extensions;
+	using System;
+	using System.Data.Entity;
+	using System.Data.Entity.Migrations;
+	using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SimpleBlog.Models.SimpleBlogDbContext>
+	internal sealed class Configuration : DbMigrationsConfiguration<SimpleBlog.Models.SimpleBlogDbContext>
     {
         public Configuration()
         {
@@ -91,6 +92,25 @@ namespace SimpleBlog.Migrations
 				new Post { Title = "Test Post 11", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(1).ToList() },
 				new Post { Title = "Test Post 12", DatePosted = DateTime.Now, Author = adminUser, Tags = context.Tags.Take(2).ToList() }
 			);
+
+
+			foreach (var tag in context.Tags)
+			{
+				if (string.IsNullOrEmpty(tag.Slug))
+				{
+					tag.Slug = tag.Name.Sluggify();
+				}
+			}
+
+
+			foreach (var post in context.Posts)
+			{
+				if (string.IsNullOrEmpty(post.Slug))
+				{
+					post.Slug = post.Title.Sluggify();
+				}
+			}
+
 
 			context.SaveChanges();
         }

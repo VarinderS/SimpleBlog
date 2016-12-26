@@ -17,6 +17,8 @@ namespace SimpleBlog.Models
 
 		public DateTime? DateDeleted { get; set; }
 
+		public string Slug { get; set; }
+
 		public IList<Tag> Tags { get; set; }
 
 		public ApplicationUser Author { get; set; }

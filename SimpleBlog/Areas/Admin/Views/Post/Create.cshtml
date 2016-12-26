@@ -18,7 +18,14 @@
 	<div class="form-group">
 		@Html.LabelFor(m => m.Title, new {@class = "col-md-2 control-label"})
 		<div class="col-md-10">
-			@Html.TextBoxFor(m => m.Title, new {@class = "form-control"})
+			@Html.TextBoxFor(m => m.Title, new {@class = "form-control js-post-title"})
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(m => m.Slug, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Slug, new { @class = "form-control disabled js-slug-input", data_slugFrom = ".js-post-title" })
 		</div>
 	</div>
 
@@ -79,4 +86,36 @@
 @section Scripts
 {
 	<script type="text/javascript" src="~/Scripts/TagSelector.js"></script>
+
+	<script type="text/javascript">
+		(function ($) {
+			
+			var $slugInput = $(".js-slug-input");
+
+			var slugFromElement = $slugInput.attr("data-slugFrom");
+
+			var $slugFromElement = $(slugFromElement);
+
+			$slugFromElement.on("keyup", function (e) {
+				
+				var $this = $(this);
+
+				var value = $this.val();
+
+				var slug = value.replace(/[^a-zA-Z0-9\s]/g, "");
+
+				slug = slug.toLowerCase();
+
+				slug = slug.replace(/\s+/g, "-");
+
+				if (slug.charAt(slug.length - 1) == "-") {
+					
+					slug = slug.substr(0, slug.length - 1);
+				}
+
+				$slugInput.val(slug);
+			});
+
+		})(jQuery);
+	</script>
 }

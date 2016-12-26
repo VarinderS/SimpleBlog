@@ -178,6 +178,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="EntityConfigurations\PostConfiguration.cs" />
     <Compile Include="EntityConfigurations\TagConfiguration.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,6 +194,10 @@
     <Compile Include="Migrations\201612240946013_AddedPostAuthorRelationship.cs" />
     <Compile Include="Migrations\201612240946013_AddedPostAuthorRelationship.Designer.cs">
       <DependentUpon>201612240946013_AddedPostAuthorRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612260008284_AddedSlugProperty.cs" />
+    <Compile Include="Migrations\201612260008284_AddedSlugProperty.Designer.cs">
+      <DependentUpon>201612260008284_AddedSlugProperty.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -233,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612240946013_AddedPostAuthorRelationship.resx">
       <DependentUpon>201612240946013_AddedPostAuthorRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612260008284_AddedSlugProperty.resx">
+      <DependentUpon>201612260008284_AddedSlugProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

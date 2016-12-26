@@ -7,6 +7,7 @@ using SimpleBlog.Controllers;
 using SimpleBlog.Infrastructure;
 using SimpleBlog.Models;
 using System.Collections.Generic;
+using SimpleBlog.Extensions;
 
 namespace SimpleBlog.Areas.Admin.Controllers
 {
@@ -88,6 +89,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 				Description = form.Description,
 				Author = currentUser,
 				DatePosted = DateTime.Now,
+				Slug = form.Slug,
 				Tags = tags
 			};
 
@@ -154,6 +156,7 @@ namespace SimpleBlog.Areas.Admin.Controllers
 			selectedPost.Title = form.Title;
 			selectedPost.Description = form.Description;
 			selectedPost.Tags = tags;
+			selectedPost.Slug = form.Slug;
 
 			DbContext.SaveChanges();
 
@@ -243,7 +246,11 @@ namespace SimpleBlog.Areas.Admin.Controllers
 				}
 
 
-				var newTag = new Tag { Name = tag.Name };
+				var newTag = new Tag 
+				{ 
+					Name = tag.Name,
+					Slug = tag.Name.Sluggify()
+				};
 
 				DbContext.Tags.Add(entity: newTag);
 

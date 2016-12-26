@@ -18,6 +18,8 @@ namespace SimpleBlog.Areas.Admin.ViewModels
 
 		public string Description { get; set; }
 
+		public string Slug { get; set; }
+
 		public IList<TagCheckbox> Tags { get; set; }
 	}
 
@@ -28,6 +30,8 @@ namespace SimpleBlog.Areas.Admin.ViewModels
 		public string Title { get; set; }
 
 		public string Description { get; set; }
+
+		public string Slug { get; set; }
 
 		public IList<TagCheckbox> Tags { get; set; }
 	}
